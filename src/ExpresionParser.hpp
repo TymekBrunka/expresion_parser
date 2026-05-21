@@ -6,15 +6,14 @@
 
 namespace exprparse {
 
-enum EXPR_AUTOCOMPLETE_TYPE {
-  EXPR_AC_FUNC,
-  EXPR_AC_FIELD,
-  EXPR_AC_ENUM,
+enum class autocomplete_type {
+  FUNC,
+  FIELD,
+  ENUM_STR,
 };
 
 class ExpresionParser {
-  EXPR_AUTOCOMPLETE_TYPE current_autocomplete_type;
-  std::vector<std::string> record_fields;
+  autocomplete_type current_autocomplete_type;
   std::unordered_map<std::string, std::vector<NanBox>> autocomplete_records;
 };
 
