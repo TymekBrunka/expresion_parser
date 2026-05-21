@@ -1,3 +1,0 @@
-C:/Users/Operator/Documents/kody/expresion_parser/build/CMakeFiles/main.dir
-C:/Users/Operator/Documents/kody/expresion_parser/build/CMakeFiles/edit_cache.dir
-C:/Users/Operator/Documents/kody/expresion_parser/build/CMakeFiles/rebuild_cache.dir

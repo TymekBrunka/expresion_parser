@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/Operator/Documents/kody/expresion_parser/build",
-  "command": "C:\\Users\\Operator\\scoop\\apps\\mingw-winlibs-llvm-msvcrt\\current\\bin\\clang++.exe -IC:/Users/Operator/Documents/kody/expresion_parser/src -g -o CMakeFiles\\main.dir\\src\\main.cpp.obj -c C:\\Users\\Operator\\Documents\\kody\\expresion_parser\\src\\main.cpp",
-  "file": "C:\\Users\\Operator\\Documents\\kody\\expresion_parser\\src\\main.cpp",
-  "output": "CMakeFiles\\main.dir\\src\\main.cpp.obj"
-}
-]
