@@ -36,12 +36,14 @@ enum class nanbox_type {
   STRUCT_PTR,
 };
 
+const char* dbg_type(nanbox_type x);
+
 class NanBox {
-private:
+public:
   uint64_t value;
 
 public:
-  NanBox() = default;
+  NanBox();
   NanBox(double x);
   NanBox(int32_t x);
   NanBox(bool x);
@@ -49,6 +51,8 @@ public:
   NanBox(std::string* x);
   NanBox(ExprParse_Struct* x);
 
+  nanbox_type type() const;
+  const char* type_name() const;
 };
 
 } // namespace exprparse

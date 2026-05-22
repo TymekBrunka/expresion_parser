@@ -1,6 +1,6 @@
-#include "NanBoxing.hpp"
 #include <ExpresionParser.hpp>
+#include <iostream>
 
 int main() {
-  exprparse::NanBox nan(12.0);
+  std::string expr = "hi.hello(cat!=12,67/89)";
 }
