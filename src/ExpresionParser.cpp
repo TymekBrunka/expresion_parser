@@ -170,9 +170,6 @@ token ExpresionParser::get_token() {
           case 'X':
             reader++;
             while (say_gex(*reader) && say_gex(*(reader + 1))) {
-              std::cout << say_gex(*reader) << ", " << say_gex(*(reader + 1))
-                        << ", " << gay_hex(*reader) << ", "
-                        << gay_hex(*(reader + 1)) << "\n";
               tmp << (char)((16 * gay_hex(*reader)) + gay_hex(*(reader + 1)));
               reader += 2;
             }
@@ -196,7 +193,6 @@ token ExpresionParser::get_token() {
         reader--;
         return {token_tag::INVALID};
       } else {
-        std::cout << *reader << " <-\n";
         tmp << *reader;
       }
       reader++;

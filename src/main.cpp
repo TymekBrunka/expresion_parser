@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-  std::string expr = "hi . hello ( cat != 12,\t67.89 / 34   ) \"Hello\\t \\x1b[32mgeen\\x1b[0m World\\n \"  ";
+  std::string expr = "hi . hello ( cat != 12,\t67.89 / 34 *= ++ --  ) \"Hello\\t \\x1b[32mgeen\\x1b[0m World\\n \\x1b[31mhai\\x1b[0m \"  ";
   exprparse::ExpresionParser parser;
   parser.reader = expr.data();
   exprparse::token tok;
