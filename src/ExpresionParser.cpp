@@ -140,7 +140,7 @@ token ExpresionParser::get_token() {
         continue;
       } else if (*reader == '\\') {
         reader++;
-        if (is_string_escape(*reader)) {
+        // if (is_string_escape(*reader)) {
           switch (*reader) {
           case '\\':
             tmp << '\\';
@@ -173,13 +173,12 @@ token ExpresionParser::get_token() {
               tmp << (char)((16 * gay_hex(*reader)) + gay_hex(*(reader + 1)));
               reader += 2;
             }
-            reader-=2;
+            reader-=1;
             break;
           default:
             return {token_tag::INVALID};
           }
-          reader++;
-        }
+        // }
       } else if (*reader == '"') {
         reader++;
         auto *sw = new StringWrapper(tmp.str());
