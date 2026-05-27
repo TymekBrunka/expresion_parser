@@ -36,10 +36,10 @@ std::string tag2str(token_tag tag) {
        : (((c) >= 'a' && (c) <= 'f') ? (c) - 'a' + 10 : (c) - 'A' + 10))
 
 #define is_numeric(c) ((c) >= '0' && (c) <= '9')
-#define is_ident_ascii(c)                                                      \
-  (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
+// #define is_ident_ascii(c)                                                      \
+//   (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
 #define is_ident_char(c)                                                       \
-  (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
+  (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z') || (c) == '_')
 
 token ExpresionParser::get_token() {
   bool can_be_num = false;
@@ -135,49 +135,51 @@ token ExpresionParser::get_token() {
   case '"':
     reader++;
     while (true) {
-      if (*reader == '\n') {
+      if (*reader == '\0') {
+        return {token_tag::INVALID};
+      } else if (*reader == '\n' || *reader == '\t') {
         reader++;
         continue;
       } else if (*reader == '\\') {
         reader++;
         // if (is_string_escape(*reader)) {
-          switch (*reader) {
-          case '\\':
-            tmp << '\\';
-            break;
-          case '"':
-            tmp << '\"';
-            break;
-          case 'a':
-            tmp << '\a';
-            break;
-          case 'b':
-            tmp << '\b';
-            break;
-          case 'f':
-            tmp << '\f';
-            break;
-          case 'n':
-            tmp << '\n';
-            break;
-          case 'r':
-            tmp << '\r';
-            break;
-          case 't':
-            tmp << '\t';
-            break;
-          case 'x':
-          case 'X':
-            reader++;
-            while (say_gex(*reader) && say_gex(*(reader + 1))) {
-              tmp << (char)((16 * gay_hex(*reader)) + gay_hex(*(reader + 1)));
-              reader += 2;
-            }
-            reader-=1;
-            break;
-          default:
-            return {token_tag::INVALID};
+        switch (*reader) {
+        case '\\':
+          tmp << '\\';
+          break;
+        case '"':
+          tmp << '\"';
+          break;
+        case 'a':
+          tmp << '\a';
+          break;
+        case 'b':
+          tmp << '\b';
+          break;
+        case 'f':
+          tmp << '\f';
+          break;
+        case 'n':
+          tmp << '\n';
+          break;
+        case 'r':
+          tmp << '\r';
+          break;
+        case 't':
+          tmp << '\t';
+          break;
+        case 'x':
+        case 'X':
+          reader++;
+          while (say_gex(*reader) && say_gex(*(reader + 1))) {
+            tmp << (char)((16 * gay_hex(*reader)) + gay_hex(*(reader + 1)));
+            reader += 2;
           }
+          reader -= 1;
+          break;
+        default:
+          return {token_tag::INVALID};
+        }
         // }
       } else if (*reader == '"') {
         reader++;
@@ -206,11 +208,13 @@ token ExpresionParser::get_token() {
     } else if (is_ident_char(*reader) && !can_be_num) {
       tmp << *reader;
       can_be_ident = true;
+    } else if (is_numeric(*reader) && can_be_ident && !can_be_num) {
+      tmp << *reader;
     } else if (*reader == '.' && can_be_num && !can_be_float) {
       tmp << *reader;
       can_be_float = true;
     } else if (can_be_num &&
-               (is_whitespace(*reader) || is_eoliteral(*reader))) {
+               (is_whitespace(*reader) || is_eoliteral(*reader)) && *reader != '.') {
       token tok{};
       if (can_be_float) {
         Box box = {._tag = tag::FLOAT,
@@ -238,6 +242,7 @@ token ExpresionParser::get_token() {
       tok.data_idx = token_data.size() - 1;
       return tok;
     } else {
+      tmp.str(std::string());
       reader++;
       return {token_tag::INVALID};
     }

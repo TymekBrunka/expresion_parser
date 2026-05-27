@@ -12,6 +12,6 @@ if (CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
   # target_include_directories(main PRIVATE src)
   target_link_libraries(main PRIVATE ExpresionParser)
 
-  add_executable(Test src/Test.cpp) #good use of clankers
-  target_link_libraries(Test PRIVATE ExpresionParser)
+  add_executable(TestTokeniser src/TestTokeniser.cpp) #good use of clankers
+  target_link_libraries(TestTokeniser PRIVATE ExpresionParser)
 endif()

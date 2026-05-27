@@ -3,6 +3,8 @@
 
 int main() {
   std::string expr = "hi . hello ( cat != 12,\t67.89 / 34 *= ++ --  ) \"Hello\\a\\t\\x1b[32mgeen\\x1b[0m World\\n \\x1b[31mhai\\x1b[0m \"  ";
+  // std::string expr =
+  //       "12.34.56";
   exprparse::ExpresionParser parser;
   parser.reader = expr.data();
   exprparse::token tok;
